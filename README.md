@@ -43,6 +43,65 @@ To configure Postfix for SMTP-AUTH using SASL (Dovecot SASL), run the following 
     sudo postconf -e 'smtpd_sasl_auth_enable = yes'
     sudo postconf -e 'smtpd_recipient_restrictions = permit_sasl_authenticated,permit_mynetworks,reject_unauth_destination'
 
+Now, the file /etc/postfix/main.cf should look like this:
+
+    # See /usr/share/postfix/main.cf.dist for a commented, more complete version
+
+
+    # Debian specific:  Specifying a file name will cause the first
+    # line of that file to be used as the name.  The Debian default
+    # is /etc/mailname.
+    #myorigin = /etc/mailname
+
+    smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+    biff = no
+
+    # appending .domain is the MUA's job.
+    append_dot_mydomain = no
+
+    # Uncomment the next line to generate "delayed mail" warnings
+    #delay_warning_time = 4h
+
+    readme_directory = no
+
+    # See http://www.postfix.org/COMPATIBILITY_README.html -- default to 3.6 on
+    # fresh installs.
+    compatibility_level = 3.6
+
+
+
+    # TLS parameters
+    smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+    smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+    smtpd_tls_security_level=may
+
+    smtp_tls_CApath=/etc/ssl/certs
+    smtp_tls_security_level=may
+    smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+
+
+    smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+    myhostname = ip-172-31-91-56.ec2.internal
+    alias_maps = hash:/etc/aliases
+    alias_database = hash:/etc/aliases
+    myorigin = /etc/mailname
+    mydestination = $myhostname, ip-172-31-91-56.ec2.internal, localhost.ec2.internal, , localhost
+    relayhost =
+    mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+    mailbox_size_limit = 0
+    recipient_delimiter = +
+    inet_interfaces = all
+    inet_protocols = all
+    home_mailbox = Maildir/
+    smtpd_sasl_type = dovecot
+    smtpd_sasl_path = private/auth
+    smtpd_sasl_local_domain =
+    smtpd_sasl_security_options = noanonymous,noplaintext
+    smtpd_sasl_tls_security_options = noanonymous
+    broken_sasl_auth_clients = yes
+    smtpd_sasl_auth_enable = yes
+    smtpd_recipient_restrictions = permit_sasl_authenticated,permit_mynetworks,reject_unauth_destination
+
 After the initial configuration is complete, you can restart the postfix daemon by running the following command:
 
     sudo systemctl restart postfix
