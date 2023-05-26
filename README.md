@@ -68,7 +68,7 @@ SMTP-AUTH configuration is complete. Now it is time to test the setup.
 
 To see if SMTP-AUTH and TLS work properly, run the following command:
 
-telnet hostname 25
+telnet ip-172-31-91-56.ec2.internal 25
 
 ![](./assets/Screenshot%202023-05-26%20025629.png)
 
