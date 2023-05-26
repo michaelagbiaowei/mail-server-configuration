@@ -99,11 +99,11 @@ Now, the file /etc/postfix/main.cf should look like this:
 
 
     smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
-    myhostname = ip-172-31-91-56.ec2.internal
+    myhostname = ip-172-31-90-175.ec2.internal
     alias_maps = hash:/etc/aliases
     alias_database = hash:/etc/aliases
     myorigin = /etc/mailname
-    mydestination = $myhostname, ip-172-31-91-56.ec2.internal, localhost.ec2.internal, , localhost
+    mydestination = $myhostname, ip-172-31-90-175.ec2.internal, localhost.ec2.internal, , localhost
     relayhost =
     mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
     mailbox_size_limit = 0
