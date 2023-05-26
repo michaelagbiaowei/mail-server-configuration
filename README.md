@@ -29,7 +29,25 @@ To configure the mailbox format for Maildir:
 
     sudo postconf -e 'home_mailbox = Maildir/'
 
-## **Step 2: SMTP Authentication**
+## **Step 2: Testing**
+SMTP-AUTH configuration is complete. Now it is time to test the setup.
+
+To see if SMTP-AUTH and TLS work properly, run the following command:
+
+    hostname -f
+
+    telnet ip-172-31-90-175.ec2.internal 25
+
+After you have established the connection to the Postfix mail server, type:
+
+    ehlo ip-172-31-90-175.ec2.internal
+
+If you see the following in the output, then everything is working perfectly. Type quit to exit.
+
+![](./assets/Screenshot%202023-05-26%20025629.png)
+
+
+## **Step 3: SMTP Authentication**
 SMTP-AUTH is a protocol that allows a client to identify itself to an SMTP server. The client authenticates itself using the SASL authentication mechanism, which encrypts the authentication process using Transport Layer Security (TLS). Once authenticated, the SMTP server will allow the client to relay mail.
 
 To configure Postfix for SMTP-AUTH using SASL (Dovecot SASL), run the following commands at a terminal prompt:
@@ -106,7 +124,7 @@ After the initial configuration is complete, you can restart the postfix daemon 
 
     sudo systemctl restart postfix
 
-## **Step 3: Configuring SASL** ##
+## **Step 4: Configuring SASL** ##
 
 To enable Dovecot SASL, you need to install the dovecot-core package.
 
@@ -121,15 +139,6 @@ Next, edit /etc/dovecot/conf.d/10-master.conf and change the following:
 Once you have Dovecot configured, restart it with:
 
     sudo systemctl restart dovecot.service
-
-## **Step 4: Testing**
-SMTP-AUTH configuration is complete. Now it is time to test the setup.
-
-To see if SMTP-AUTH and TLS work properly, run the following command:
-
-    telnet ip-172-31-91-56.ec2.internal 25
-
-![](./assets/Screenshot%202023-05-26%20025629.png)
 
 ---
 
