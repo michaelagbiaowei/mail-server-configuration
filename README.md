@@ -106,7 +106,7 @@ After the initial configuration is complete, you can restart the postfix daemon 
 
     sudo systemctl restart postfix
 
-## **Step 2: Configuring SASL** ##
+## **Step 3: Configuring SASL** ##
 
 To enable Dovecot SASL, you need to install the dovecot-core package.
 
@@ -122,7 +122,7 @@ Once you have Dovecot configured, restart it with:
 
     sudo systemctl restart dovecot.service
 
-## **Step 3: Testing**
+## **Step 4: Testing**
 SMTP-AUTH configuration is complete. Now it is time to test the setup.
 
 To see if SMTP-AUTH and TLS work properly, run the following command:
