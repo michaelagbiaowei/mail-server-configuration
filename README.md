@@ -17,7 +17,7 @@ Postfix is the default mail transfer agent (MTA) in Ubuntu. It is designed to be
 
 To install Mail Server, firstly, update your machine and then, install `postfix` using the following command:
 
-**NOTE: Keep the Basic Configurations at default**
+**NOTE: Use the default settings for the basic configurations**
 
     sudo apt update; sudo apt isnatll postfix -y
 
